@@ -35,8 +35,8 @@ export default function OneManDBMilestone() {
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-white text-black">
-      <header className="w-full py-8 bg-black text-white flex flex-col items-center">
-        <h1 className="text-4xl font-bold tracking-tight">OneManDB Milestone</h1>
+      <header className="w-full px-4 py-8 bg-black text-white flex flex-col items-center">
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">OneManDB Milestone</h1>
         <div className="mt-6 w-full max-w-md">
           <div className="flex justify-between text-sm mb-1">
             <span>{completedCount} completed</span>
