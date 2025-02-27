@@ -14,7 +14,7 @@ export default function OneManDBMilestone() {
     return []
   })
 
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  // const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
   useEffect(() => {
     if (typeof window !== "undefined") {
