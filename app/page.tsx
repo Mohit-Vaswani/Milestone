@@ -6,7 +6,9 @@ import { motion, AnimatePresence } from "framer-motion"
 export default function OneManDBMilestone() {
   const TOTAL_CHECKBOXES = 1000
   const STORAGE_KEY = "onemandb_milestone"
-  const PRICE_PER_SALE = 37
+  const INITIAL_PRICE = 37
+  const UPDATED_PRICE = 44
+  const PRICE_CHANGE_THRESHOLD = 19  // Price changes after 19th sale
 
   const [checkedState, setCheckedState] = useState<boolean[]>(() => {
     if (typeof window !== "undefined") {
@@ -63,9 +65,17 @@ export default function OneManDBMilestone() {
     setTimeout(() => setShowConfetti(false), 3000)
   }
 
+  const calculateTotalRevenue = (count: number) => {
+    if (count <= PRICE_CHANGE_THRESHOLD) {
+      return count * INITIAL_PRICE;
+    }
+    return (PRICE_CHANGE_THRESHOLD * INITIAL_PRICE) + 
+           ((count - PRICE_CHANGE_THRESHOLD) * UPDATED_PRICE);
+  }
+
   const completedCount = checkedState.filter(Boolean).length
   const completionPercentage = (completedCount / TOTAL_CHECKBOXES) * 100
-  const totalRevenue = completedCount * PRICE_PER_SALE
+  const totalRevenue = calculateTotalRevenue(completedCount)
 
   const milestones = [
     { at: 250, label: "25%" },
@@ -157,6 +167,11 @@ export default function OneManDBMilestone() {
             <div>
               <p className="text-sm font-medium opacity-80">Current Revenue</p>
               <p className="text-3xl font-bold">${totalRevenue.toLocaleString()}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                {completedCount > PRICE_CHANGE_THRESHOLD ? 
+                  `Current price: $${UPDATED_PRICE}` : 
+                  `Price increases to $${UPDATED_PRICE} after ${PRICE_CHANGE_THRESHOLD + 1} sales`}
+              </p>
             </div>
             <div className="text-right">
               <p className="text-sm font-medium opacity-80">Remaining</p>
